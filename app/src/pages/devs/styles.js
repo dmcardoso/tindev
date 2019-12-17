@@ -14,6 +14,7 @@ export const Logo = styled(Image)`
 
 export const CardsContainer = styled(View)`
     flex: 1;
+    z-index: 0;
     align-self: stretch;
     justify-content: center;
     max-height: 500px;
@@ -57,6 +58,7 @@ export const Bio = styled(Text)`
 export const ButtonsContainer = styled(View)`
     flex-direction: row;
     margin-bottom: 30px;
+    z-index: 0;
 `;
 
 export const Button = styled(TouchableOpacity)`
@@ -81,4 +83,55 @@ export const Empty = styled(Text)`
     font-weight: bold;
 `;
 
+export const MatchContainer = styled(View)`
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 1;
+    background-color: rgba(0,0,0,.8);
+    justify-content: center;
+    align-items: center;
+`;
+
+export const ItsAMatch = styled(Image)`
+    height: 60px;
+    resize-mode: contain;
+`;
+
+export const MatchAvatar = styled(Image)`
+    width: 160px;
+    height: 160px;
+    border-radius: 80px;
+    margin: 30px;
+    border-width: 5px;
+    border-color: #fff;
+`;
+
+export const MatchName = styled(Text)`
+    font-size: 26px;
+    font-weight: bold;
+    color: #fff;
+`;
+
+export const MatchBio = styled(Text)`
+    margin-top: 10px;
+    font-size: 16px;
+    color: rgba(255,255,255,.8);
+    line-height: 24px;
+    text-align: center;
+    padding: 0 30px;
+`;
+
+export const Fechar = styled(TouchableOpacity)`
+
+`;
+export const FecharText = styled(Text)`
+    font-size: 16px;
+    color: rgba(255,255,255,.8);
+    text-align: center;
+    margin-top: 30px;
+    font-weight: bold;
+`;
 

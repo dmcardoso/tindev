@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import io from 'socket.io-client';
 import {TouchableOpacity} from "react-native";
 import {
     Container,
@@ -13,16 +14,24 @@ import {
     Button,
     ImageButton,
     Empty,
+    MatchContainer,
+    ItsAMatch,
+    MatchAvatar,
+    MatchName,
+    FecharText,
+    Fechar, MatchBio,
 } from './styles';
 import AsyncStorage from "@react-native-community/async-storage";
 import logo from '../../assets/images/logo.png';
 import dislike from '../../assets/images/dislike.png';
 import like from '../../assets/images/like.png';
+import itsamatch from '../../assets/images/itsamatch.png';
 import api from '../../services/api';
 
 function Devs({navigation}) {
     const id = navigation.getParam('user');
     const [devs, setDevs] = useState([]);
+    const [matchDev, setMatchDev] = useState(null);
 
     useEffect(() => {
         async function loadUsers() {
@@ -37,6 +46,17 @@ function Devs({navigation}) {
 
         loadUsers();
     }, [id]);
+
+    useEffect(() => {
+        const socket = io(api.defaults.baseURL, {query: {user: id}});
+
+        socket.on('match', dev => {
+            setMatchDev(dev);
+        });
+        return () => {
+        };
+    }, [id]);
+
 
     async function handleLogout() {
         await AsyncStorage.clear();
@@ -97,6 +117,21 @@ function Devs({navigation}) {
                         <ImageButton source={like}/>
                     </Button>
                 </ButtonsContainer>
+            )}
+            {matchDev && (
+                <MatchContainer>
+                    <ItsAMatch source={itsamatch}/>
+                    <MatchAvatar source={{uri: matchDev.avatar}}/>
+                    <MatchName>
+                        {matchDev.name}
+                    </MatchName>
+                    <MatchBio>
+                        {matchDev.bio}
+                    </MatchBio>
+                    <Fechar onPress={() => setMatchDev(null)}>
+                        <FecharText>Fechar</FecharText>
+                    </Fechar>
+                </MatchContainer>
             )}
         </Container>
     );
